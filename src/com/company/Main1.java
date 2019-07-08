@@ -1,6 +1,6 @@
 package com.company;
 
-public class Main {
+public class Main1 {
 
     public static void main(String[] args) {
 
@@ -8,19 +8,17 @@ public class Main {
         //- String jewels: строка, каждый символ который символизирует драгоценный камень, символы уникальны
         //- String stones: строка, каждый символ который символизирует камень.
         //Строки могут состоять только из символов a..zA..Z
-        //Метод должне вернуть количество другоценных камней в строке stones.
+        //Метод должне вернуть количество драгоценных камней в строке stones.
 
         System.out.println(numJewelsInStones("aSDf", "aaAAssddSSDDfFfF"));
     }
 
     private static int numJewelsInStones(String jewels, String stones) {
         int numJewelsInStones = 0;
-        if (jewels.matches("[a-zA-Z]*") && stones.matches("[a-zA-Z]*")) {
-            for (int i = 0; i < jewels.length(); i++) {
-                for (int j = 0; j < stones.length(); j++) {
-                    if (jewels.charAt(i) == stones.charAt(j)) {
-                        numJewelsInStones++;
-                    }
+        for (int i = 0; i < jewels.length(); i++) {
+            for (int j = 0; j < stones.length(); j++) {
+                if (jewels.charAt(i) == stones.charAt(j)) {
+                    numJewelsInStones++;
                 }
             }
         }
