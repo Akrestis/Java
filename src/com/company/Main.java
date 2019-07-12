@@ -1,28 +1,52 @@
 package com.company;
 
-public class Main1 {
+public class Main {
 
     public static void main(String[] args) {
+        IntLinkedList myList = new IntLinkedList();
 
-        //1. Написать метод numJewelsInStones который принимает 2 параметра:
-        //- String jewels: строка, каждый символ который символизирует драгоценный камень, символы уникальны
-        //- String stones: строка, каждый символ который символизирует камень.
-        //Строки могут состоять только из символов a..zA..Z
-        //Метод должне вернуть количество драгоценных камней в строке stones.
+        myList.add(1);
+        myList.add(2);
+        myList.add(3);
+        myList.add(4);
+        myList.add(5);
+        myList.add(6);
+        myList.add(7);
+        myList.add(8);
+        myList.add(9);
+        myList.add(10);
+        System.out.println(myList);
 
-        System.out.println(numJewelsInStones("aSDf", "aaAAssddSSDDfFfF"));
-    }
+        System.out.println(myList.size());
 
-    private static int numJewelsInStones(String jewels, String stones) {
-        int numJewelsInStones = 0;
-        for (int i = 0; i < jewels.length(); i++) {
-            for (int j = 0; j < stones.length(); j++) {
-                if (jewels.charAt(i) == stones.charAt(j)) {
-                    numJewelsInStones++;
-                }
-            }
-        }
-        return numJewelsInStones;
+        System.out.println(myList.isEmpty());
+
+        System.out.println(myList.get(5));
+
+        myList.removeByIndex(5);
+        System.out.println(myList);
+
+        myList.add(5, 10);
+        System.out.println(myList);
+
+        myList.set(1, 10);
+        System.out.println(myList);
+
+        myList.removeByValue(10);
+        System.out.println(myList);
+
+        System.out.println(myList.subList(1,4));
+
+        System.out.println(myList.peek());
+        System.out.println(myList.pop());
+        System.out.println(myList);
+
+        System.out.println(myList.element());
+        System.out.println(myList.remove());
+        System.out.println(myList);
+
+        myList.clear();
+        System.out.println(myList);
     }
 }
 
