@@ -2,7 +2,7 @@ package com.company;
 
 public interface IntStack {
 
-    void add(int value);
+    boolean push(int value);
     int pop(); // remove and get value on top of Stack
     int peek(); // get value on top of Stack
 }

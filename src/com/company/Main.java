@@ -17,6 +17,8 @@ public class Main {
         myList.add(10);
         System.out.println(myList);
 
+        System.out.println(myList.subList(1, 4));
+
         System.out.println(myList.size());
 
         System.out.println(myList.isEmpty());
@@ -35,14 +37,15 @@ public class Main {
         myList.removeByValue(10);
         System.out.println(myList);
 
-        System.out.println(myList.subList(1,4));
+        System.out.println(myList.element());
+        System.out.println(myList.remove());
+        System.out.println(myList);
+
+        myList.push(111);
+        System.out.println(myList);
 
         System.out.println(myList.peek());
         System.out.println(myList.pop());
-        System.out.println(myList);
-
-        System.out.println(myList.element());
-        System.out.println(myList.remove());
         System.out.println(myList);
 
         myList.clear();

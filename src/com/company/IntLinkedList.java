@@ -220,26 +220,32 @@ public class IntLinkedList implements IntList, IntQueue, IntStack {
     }
 
     @Override
+    public boolean push(int value) {
+        add(0, value);
+        return true;
+    }
+
+    @Override
     public int pop() {
-        int value = last.value;
-        removeByIndex(size - 1);
-        return value;
-    }
-
-    @Override
-    public int peek() {
-        return last.value;
-    }
-
-    @Override
-    public int remove() {
         int value = first.value;
         removeByIndex(0);
         return value;
     }
 
     @Override
-    public int element() {
+    public int peek() {
         return first.value;
+    }
+
+    @Override
+    public int remove() {
+        int value = last.value;
+        removeByIndex(size - 1);
+        return value;
+    }
+
+    @Override
+    public int element() {
+        return last.value;
     }
 }
