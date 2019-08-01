@@ -1,36 +1,55 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Main2 {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
-        //2. Задан текстовый файл. Вывести сколько в нём: a) строк b) слов c) символов
+        //2*. Объединить 2 бинарных дерева
 
-        getWordCount("test.txt");
+        TreeNode treeOne = new TreeNode(1);
+        treeOne.left = new TreeNode(3);
+        treeOne.right = new TreeNode(2);
+        treeOne.left.left = new TreeNode(5);
+
+        TreeNode treeTwo = new TreeNode(2);
+        treeTwo.left = new TreeNode(1);
+        treeTwo.right = new TreeNode(3);
+        treeTwo.left.right = new TreeNode(4);
+        treeTwo.right.right = new TreeNode(7);
+
+        TreeNode treeThree = mergeTrees(treeOne, treeTwo);
+        printTree(treeThree);
     }
 
-    private static void getWordCount(String filename) throws FileNotFoundException {
-        File file = new File(filename);
-        Scanner scanner = new Scanner(file);
-        int lines = 0;
-        int words = 0;
-        int characters = 0;
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
 
-        while (scanner.hasNextLine()) {
-            lines++;
-            String[] array = scanner.nextLine().split(" ");
-            words += array.length;
-            for (String s : array) {
-                characters += s.toCharArray().length;
-            }
+        TreeNode(int x) {
+            val = x;
         }
-        System.out.println("Number of lines: " + lines);
-        System.out.println("Number of words: " + words);
-        System.out.println("Number of characters: " + characters);
-        scanner.close();
+    }
+
+    private static TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null) {
+            return t2;
+        }
+        if (t2 == null) {
+            return t1;
+        }
+        t1.val += t2.val;
+        t1.left = mergeTrees(t1.left, t2.left);
+        t1.right = mergeTrees(t1.right, t2.right);
+        return t1;
+    }
+
+    private static void printTree(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        printTree(node.left);
+        System.out.print(node.val + " ");
+        printTree(node.right);
     }
 }

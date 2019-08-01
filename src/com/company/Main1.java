@@ -1,60 +1,35 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.Random;
-
 public class Main1 {
-
-    private static final int ROW = 4;
-    private static final int COLUMN = 3;
 
     public static void main(String[] args) {
 
-        //1. Создать 2 мерный массив (матрица) M*N и заполнить его случайными числами.
-        //Отсортировать числа по возрастанию.
+        //1. Число Фибоначи
+        //написать метод который возвращает N-ное число фибоначи, по правилу:
+        //F(0) = 0, F(1) = 1
+        //F(N) = F(N - 1) + F(N - 2)
 
-        Random random = new Random();
-        int[][] matrix = new int[COLUMN][ROW];
-        for (int i = 0; i < COLUMN; i++) {
-            for (int j = 0; j < ROW; j++) {
-                matrix[i][j] = random.nextInt(100);
-            }
-        }
-
-        matrixPrint(matrix);
-        matrixSort(matrix);
-        matrixPrint(matrix);
+        System.out.println(fibonacci(4));
     }
 
-    private static void matrixSort(int[][] matrix) {
-        int[] array = new int[COLUMN * ROW];
-        int num = 0;
-        for (int i = 0; i < COLUMN; i++) {
-            for (int j = 0; j < ROW; j++) {
-                array[num] = matrix[i][j];
-                num++;
-            }
+    private static int fibonacci(int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("parameter can't be negative");
         }
-        Arrays.sort(array);
-        num = 0;
-        for (int i = 0; i < COLUMN; i++) {
-            for (int j = 0; j < ROW; j++) {
-                matrix[i][j] = array[num];
-                num++;
+        if (count == 0 || count == 1) {
+            return count;
+        } else {
+            int first = 0;
+            int second = 1;
+            int number = first + second;
+            count--;
+            while (count != 1) {
+                first = second;
+                second = number;
+                number = first + second;
+                count--;
             }
-        }
-    }
-
-    private static void matrixPrint(int[][] matrix) {
-        for (int i = 0; i < COLUMN; i++) {
-            System.out.print("[");
-            for (int j = 0; j < ROW; j++) {
-                System.out.print(matrix[i][j]);
-                if (j != ROW - 1) {
-                    System.out.print(", ");
-                }
-            }
-            System.out.println("]");
+            return number;
         }
     }
 }
