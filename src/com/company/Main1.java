@@ -53,7 +53,7 @@ public class Main1 extends Application {
         gc.setFill(Color.YELLOW);
         gc.fillOval(400, -100, 200, 200);
 
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(65,365,40,40);
 
         gc.setFill(Color.BURLYWOOD);

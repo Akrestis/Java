@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class Main2 extends Application {
 
-    private static final int BOARD_WIDTH = 500;
-    private static final int BOARD_HEIGHT = 500;
+    private static final int BOARD_WIDTH = 800;
+    private static final int BOARD_HEIGHT = 600;
     private boolean closed = false;
 
     public static void main(String[] args) {
@@ -50,8 +50,8 @@ public class Main2 extends Application {
             @Override
             public void run() {
                 Random random = new Random();
-                int speedX = random.nextInt(5) + 1;
-                int speedY = random.nextInt(5) + 1;
+                int speedX = random.nextInt(5) + 3;
+                int speedY = random.nextInt(5) + 3;
                 double x = 1;
                 double y = 1;
                 double diameter = 50;
@@ -69,7 +69,7 @@ public class Main2 extends Application {
                     }
 
                     if (y + diameter >= BOARD_HEIGHT || y <= 0) {
-                        speedY = 0 - speedY;
+                        speedY = -speedY;
                     }
                     x += speedX;
                     y += speedY;
