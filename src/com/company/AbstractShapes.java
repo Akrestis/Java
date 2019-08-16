@@ -7,9 +7,9 @@ abstract class AbstractShapes implements Shapes {
     static final int BOARD_HEIGHT = 500;
     static final int BOARD_WIDTH = 500;
     private static final int SPEED = 8;
-    int size = 50;
-    double x = 0;
-    double y = 0;
+    double x = Board.x;
+    double y = Board.y;
+    int size = Board.size;
     final GraphicsContext gc;
 
     AbstractShapes(GraphicsContext gc) {

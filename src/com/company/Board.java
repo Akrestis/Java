@@ -9,12 +9,15 @@ import java.util.List;
 
 class Board {
 
-    private GraphicsContext gc;
+    static GraphicsContext gc;
     private int index = -1;
     private static List<Group> shapes = new ArrayList<>();
+    static double x = 0;
+    static double y = 0;
+    static int size = 50;
 
     Board(GraphicsContext gc) {
-        this.gc = gc;
+        Board.gc = gc;
     }
 
     void mouse(MouseEvent mouseEvent) {
@@ -75,23 +78,28 @@ class Board {
                 case DELETE:
                     shapes.remove(index);
                     index--;
+                    break;
             }
         }
         switch (keyEvent.getCode()) {
             case DIGIT1:
-                Group circle = new Group(new Circle(gc));
+                Group circle = new Group(new Circle(gc, x, y, size));
                 shapes.add(circle);
                 index = shapes.size() - 1;
                 break;
             case DIGIT2:
-                Group square = new Group(new Square(gc));
+                Group square = new Group(new Square(gc, x, y, size));
                 shapes.add(square);
                 index = shapes.size() - 1;
                 break;
             case DIGIT3:
-                Group triangle = new Group(new Triangle(gc));
+                Group triangle = new Group(new Triangle(gc, x, y, size));
                 shapes.add(triangle);
                 index = shapes.size() - 1;
+                break;
+            case SPACE:
+                shapes.add( Group.copy(shapes.get(index)));
+                index++;
                 break;
         }
         for (int i = 0; i < shapes.size(); i++) {

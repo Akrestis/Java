@@ -5,8 +5,11 @@ import javafx.scene.paint.Color;
 
 public class Circle extends AbstractShapes {
 
-    Circle(GraphicsContext gc) {
+    Circle(GraphicsContext gc,double x,double y,int size) {
         super(gc);
+        this.x = x;
+        this.y = y;
+        this.size = size;
     }
 
     @Override

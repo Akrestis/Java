@@ -5,8 +5,11 @@ import javafx.scene.paint.Color;
 
 public class Square extends AbstractShapes {
 
-    Square(GraphicsContext gc) {
+    Square(GraphicsContext gc,double x,double y,int size) {
         super(gc);
+        this.x = x;
+        this.y = y;
+        this.size = size;
     }
 
     @Override

@@ -5,8 +5,11 @@ import javafx.scene.paint.Color;
 
 public class Triangle extends AbstractShapes {
 
-    Triangle(GraphicsContext gc) {
+    Triangle(GraphicsContext gc,double x,double y,int size) {
         super(gc);
+        this.x = x;
+        this.y = y;
+        this.size = size;
     }
 
     @Override
