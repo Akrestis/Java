@@ -79,6 +79,10 @@ class Board {
                     shapes.remove(index);
                     index--;
                     break;
+                case SPACE:
+                    shapes.add(Group.copy(shapes.get(index)));
+                    index++;
+                    break;
             }
         }
         switch (keyEvent.getCode()) {
@@ -96,10 +100,6 @@ class Board {
                 Group triangle = new Group(new Triangle(gc, x, y, size));
                 shapes.add(triangle);
                 index = shapes.size() - 1;
-                break;
-            case SPACE:
-                shapes.add( Group.copy(shapes.get(index)));
-                index++;
                 break;
         }
         for (int i = 0; i < shapes.size(); i++) {
