@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Group implements Shapes {
 
-    private List<Shapes> shapesList = new ArrayList<>();
+    List<Shapes> shapesList = new ArrayList<>();
 
     Group() {
     }

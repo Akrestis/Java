@@ -24,19 +24,21 @@ class Board {
         double mouseX = mouseEvent.getX();
         double mouseY = mouseEvent.getY();
         for (int i = 0; i < shapes.size(); i++) {
-            if (i != index && mouseX >= shapes.get(i).getX() &&
-                    mouseX <= shapes.get(i).getX() + shapes.get(i).getSize() &&
-                    mouseY >= shapes.get(i).getY() &&
-                    mouseY <= shapes.get(i).getY() + shapes.get(i).getSize()) {
-                Group.combination(shapes.get(index), shapes.get(i));
-                shapes.remove(shapes.get(i));
-                index--;
-                gc.clearRect(0, 0, AbstractShapes.BOARD_HEIGHT, AbstractShapes.BOARD_WIDTH);
-                for (int j = 0; j < shapes.size(); j++) {
-                    if (j != index) {
-                        shapes.get(j).draw();
-                    } else {
-                        shapes.get(j).drawFull();
+            for (int j = 0; j < shapes.get(i).shapesList.size(); j++) {
+                if (i != index && mouseX >= shapes.get(i).shapesList.get(j).getX() &&
+                        mouseX <= shapes.get(i).shapesList.get(j).getX() + shapes.get(i).shapesList.get(j).getSize() &&
+                        mouseY >= shapes.get(i).shapesList.get(j).getY() &&
+                        mouseY <= shapes.get(i).shapesList.get(j).getY() + shapes.get(i).shapesList.get(j).getSize()) {
+                    Group.combination(shapes.get(index), shapes.get(i));
+                    shapes.remove(shapes.get(i));
+                    index--;
+                    gc.clearRect(0, 0, AbstractShapes.BOARD_HEIGHT, AbstractShapes.BOARD_WIDTH);
+                    for (int k = 0; k < shapes.size(); k++) {
+                        if (k != index) {
+                            shapes.get(k).draw();
+                        } else {
+                            shapes.get(k).drawFull();
+                        }
                     }
                 }
             }
@@ -87,18 +89,15 @@ class Board {
         }
         switch (keyEvent.getCode()) {
             case DIGIT1:
-                Group circle = new Group(new Circle(gc, x, y, size));
-                shapes.add(circle);
+                shapes.add(new Group(new Circle(gc, x, y, size)));
                 index = shapes.size() - 1;
                 break;
             case DIGIT2:
-                Group square = new Group(new Square(gc, x, y, size));
-                shapes.add(square);
+                shapes.add(new Group(new Square(gc, x, y, size)));
                 index = shapes.size() - 1;
                 break;
             case DIGIT3:
-                Group triangle = new Group(new Triangle(gc, x, y, size));
-                shapes.add(triangle);
+                shapes.add(new Group(new Triangle(gc, x, y, size)));
                 index = shapes.size() - 1;
                 break;
         }
