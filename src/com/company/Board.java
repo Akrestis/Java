@@ -4,14 +4,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 class Board {
 
     static GraphicsContext gc;
-    private int index = -1;
-    private static List<Group> shapes = new ArrayList<>();
+    static int index = -1;
+    static List<Group> shapes = new ArrayList<>();
     static double x = 0;
     static double y = 0;
     static int size = 50;
@@ -100,6 +102,8 @@ class Board {
                 shapes.add(new Group(new Triangle(gc, x, y, size)));
                 index = shapes.size() - 1;
                 break;
+            case F5:
+                save();
         }
         for (int i = 0; i < shapes.size(); i++) {
             if (i != index) {
@@ -122,5 +126,27 @@ class Board {
         if (index == shapes.size()) {
             index = 0;
         }
+    }
+
+    private void save() {
+        StringBuilder sb = new StringBuilder();
+        for (Group shape : shapes) {
+            sb.append("Group").append('\n');
+            for (int j = 0; j < shape.shapesList.size(); j++) {
+                sb.append(shape.shapesList.get(j).getClass()).append(" ").
+                        append(shape.shapesList.get(j).getX()).append(" ").
+                        append(shape.shapesList.get(j).getY()).append(" ").
+                        append(shape.shapesList.get(j).getSize()).append(" ").append('\n');
+            }
+        }
+        sb.append(" ");
+        try {
+            FileWriter writer = new FileWriter("save.txt");
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(sb);
     }
 }
