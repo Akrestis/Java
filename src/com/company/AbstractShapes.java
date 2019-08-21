@@ -4,16 +4,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 abstract class AbstractShapes implements Shapes {
 
-    static final int BOARD_HEIGHT = 500;
-    static final int BOARD_WIDTH = 500;
     private static final int SPEED = 8;
-    double x = Board.x;
-    double y = Board.y;
-    int size = Board.size;
-    final GraphicsContext gc;
+    double x = 0;
+    double y = 0;
+    int size = 50;
+    static GraphicsContext gc;
 
     AbstractShapes(GraphicsContext gc) {
-        this.gc = gc;
+        AbstractShapes.gc = gc;
     }
 
     @Override
@@ -25,7 +23,7 @@ abstract class AbstractShapes implements Shapes {
 
     @Override
     public void moveRight() {
-        if (x + size < BOARD_WIDTH) {
+        if (x + size < Main.BOARD_WIDTH) {
             x += SPEED;
         }
     }
@@ -39,7 +37,7 @@ abstract class AbstractShapes implements Shapes {
 
     @Override
     public void moveDown() {
-        if (y + size < BOARD_HEIGHT) {
+        if (y + size < Main.BOARD_HEIGHT) {
             y += SPEED;
         }
     }

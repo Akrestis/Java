@@ -4,19 +4,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class Board {
 
-    static GraphicsContext gc;
-    static int index = -1;
-    static List<Group> shapes = new ArrayList<>();
-    static double x = 0;
-    static double y = 0;
-    static int size = 50;
+    private static GraphicsContext gc;
+    private static int index = -1;
+    private static List<Group> shapes = new ArrayList<>();
 
     Board(GraphicsContext gc) {
         Board.gc = gc;
@@ -34,14 +34,8 @@ class Board {
                     Group.combination(shapes.get(index), shapes.get(i));
                     shapes.remove(shapes.get(i));
                     index--;
-                    gc.clearRect(0, 0, AbstractShapes.BOARD_HEIGHT, AbstractShapes.BOARD_WIDTH);
-                    for (int k = 0; k < shapes.size(); k++) {
-                        if (k != index) {
-                            shapes.get(k).draw();
-                        } else {
-                            shapes.get(k).drawFull();
-                        }
-                    }
+                    gc.clearRect(0, 0, Main.BOARD_HEIGHT, Main.BOARD_WIDTH);
+                    draw();
                 }
             }
         }
@@ -49,7 +43,7 @@ class Board {
 
     void keyboard(KeyEvent keyEvent) {
 
-        gc.clearRect(0, 0, AbstractShapes.BOARD_HEIGHT, AbstractShapes.BOARD_WIDTH);
+        gc.clearRect(0, 0, Main.BOARD_HEIGHT, Main.BOARD_WIDTH);
 
         if (index > -1) {
             Group shape = shapes.get(index);
@@ -81,7 +75,7 @@ class Board {
                     break;
                 case DELETE:
                     shapes.remove(index);
-                    index--;
+                    previous();
                     break;
                 case SPACE:
                     shapes.add(Group.copy(shapes.get(index)));
@@ -89,6 +83,9 @@ class Board {
                     break;
             }
         }
+        double x = 0;
+        double y = 0;
+        int size = 50;
         switch (keyEvent.getCode()) {
             case DIGIT1:
                 shapes.add(new Group(new Circle(gc, x, y, size)));
@@ -105,13 +102,7 @@ class Board {
             case F5:
                 save();
         }
-        for (int i = 0; i < shapes.size(); i++) {
-            if (i != index) {
-                shapes.get(i).draw();
-            } else {
-                shapes.get(i).drawFull();
-            }
-        }
+        draw();
     }
 
     private void previous() {
@@ -125,6 +116,16 @@ class Board {
         index++;
         if (index == shapes.size()) {
             index = 0;
+        }
+    }
+
+    private static void draw() {
+        for (int i = 0; i < shapes.size(); i++) {
+            if (i != index) {
+                shapes.get(i).draw();
+            } else {
+                shapes.get(i).drawFull();
+            }
         }
     }
 
@@ -146,6 +147,43 @@ class Board {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    static void load() {
+        try {
+            File file = new File("save.txt");
+            Scanner scanner = new Scanner(file);
+            String line = scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                if (line.startsWith("Group")) {
+                    shapes.add(new Group());
+                    index++;
+                    line = scanner.nextLine();
+                }
+                while (!line.startsWith("Group") && scanner.hasNextLine()) {
+                    String[] array = line.substring(18).split(" ");
+                    double x = Double.parseDouble(array[1]);
+                    double y = Double.parseDouble(array[2]);
+                    int size = Integer.parseInt(array[3]);
+                    switch (array[0]) {
+                        case "Circle":
+                            shapes.get(index).shapesList.add(new Circle(gc, x, y, size));
+                            break;
+                        case "Square":
+                            shapes.get(index).shapesList.add(new Square(gc, x, y, size));
+                            break;
+                        case "Triangle":
+                            shapes.get(index).shapesList.add(new Triangle(gc, x, y, size));
+                            break;
+                    }
+                    line = scanner.nextLine();
+                }
+            }
+            draw();
+        } catch (
+                FileNotFoundException e) {
+            System.out.println("there's no save.txt");
         }
     }
 }

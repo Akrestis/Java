@@ -7,11 +7,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Main extends Application {
+
+    static final int BOARD_HEIGHT = 500;
+    static final int BOARD_WIDTH = 500;
 
     public static void main(String[] args) {
 
@@ -31,53 +30,15 @@ public class Main extends Application {
     public void start(Stage primary) {
         primary.setTitle("Home");
         Canvas canvas = new Canvas();
-        canvas.setHeight(AbstractShapes.BOARD_HEIGHT);
-        canvas.setWidth(AbstractShapes.BOARD_WIDTH);
+        canvas.setHeight(BOARD_HEIGHT);
+        canvas.setWidth(BOARD_WIDTH);
         BorderPane group = new BorderPane(canvas);
         Scene scene = new Scene(group);
         primary.setScene(scene);
         primary.show();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Board board = new Board(gc);
-        try {
-            File file = new File("save.txt");
-            Scanner scanner = new Scanner(file);
-            String line = scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                if (line.startsWith("Group")) {
-                    Board.shapes.add(new Group());
-                    Board.index++;
-                    line = scanner.nextLine();
-                }
-                while (!line.startsWith("Group") && scanner.hasNextLine()) {
-                    String[] array = line.substring(18).split(" ");
-                    double x = Double.parseDouble(array[1]);
-                    double y = Double.parseDouble(array[2]);
-                    int size = Integer.parseInt(array[3]);
-                    switch (array[0]) {
-                        case "Circle":
-                            Board.shapes.get(Board.index).shapesList.add(new Circle(gc, x, y, size));
-                            break;
-                        case "Square":
-                            Board.shapes.get(Board.index).shapesList.add(new Square(gc, x, y, size));
-                            break;
-                        case "Triangle":
-                            Board.shapes.get(Board.index).shapesList.add(new Triangle(gc, x, y, size));
-                            break;
-                    }
-                    line = scanner.nextLine();
-                }
-            }
-            for (int i = 0; i < Board.shapes.size(); i++) {
-                if (i != Board.index) {
-                    Board.shapes.get(i).draw();
-                } else {
-                    Board.shapes.get(i).drawFull();
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("there's no save.txt");
-        }
+        Board.load();
 
         scene.setOnKeyPressed(board::keyboard);
         scene.setOnMouseClicked(board::mouse);
