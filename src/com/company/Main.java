@@ -1,22 +1,27 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.google.gson.Gson;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-     //1.) Создать список случайных чисел. Используя Stream Api подсчитать среднее арифиметическое квадратов этих чисел/
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Input date in format dd.mm.yyyy");
+        String input = scanner.nextLine();
+        String URL = "https://api.privatbank.ua/p24api/exchange_rates?json&date=" + input;
 
-        Random random = new Random();
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(random.nextInt(10) + 1);
+        String json = HttpUtil.sendRequest(URL, null, null);
+        Gson gson = new Gson();
+
+        Response response = gson.fromJson(json, Response.class);
+        for (Value rate : response.getExchangeRate()) {
+            if ("USD".equals(rate.getCurrency())) {
+                System.out.println("Sale rate: " + rate.getSaleRateNB() + '\n'
+                        + "Purchase rate: " + rate.getPurchaseRateNB());
+                break;
+            }
         }
-        System.out.println(list);
-
-        System.out.println(list.stream().mapToInt(Integer::intValue).map(s->s*s).average());
     }
 }
