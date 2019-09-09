@@ -7,6 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //Пользователь вводит дату в консоли, программа должна вывести курс USD за эту дату или сообщение об ошибке.
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input date in format dd.mm.yyyy");
         String input = scanner.nextLine();
