@@ -1,29 +1,35 @@
 package com.company;
 
 import java.util.List;
+import java.util.Map;
 
 public class Response {
 
+    private Object args;
     private String date;
-    private List<Value> exchangeRate;
+    private Map<String, String> form;
+    private Map<String, String> headers;
+    private Map<String, String> json;
+    private String url;
 
-    public Response() {
-    }
-
-    public Response(String date, List<Value> exchangeRate, Value value) {
+    public Response(List<String> args, String date, Map<String, String> form, Map<String,
+            String> headers, Map<String, String> json, String url) {
+        this.args = args;
         this.date = date;
-        this.exchangeRate = exchangeRate;
-    }
-
-    public List<Value> getExchangeRate() {
-        return exchangeRate;
+        this.form = form;
+        this.headers = headers;
+        this.json = json;
+        this.url = url;
     }
 
     @Override
     public String toString() {
-        return "Response{" +
-                "date='" + date + '\'' +
-                ", exchangeRate=" + exchangeRate +
-                '}';
+        return "Response: " + '\n' +
+                "args: " + args + '\n' +
+                "date: " + date + '\n' +
+                "form: " + form +  '\n' +
+                "headers: " + headers + '\n' +
+                "json: " + json + '\n' +
+                "url: " + url;
     }
 }

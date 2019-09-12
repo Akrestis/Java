@@ -1,29 +1,21 @@
 package com.company;
 
 import com.google.gson.Gson;
-import java.util.Scanner;
 
 public class Main {
 
+    private final static String URL = "https://postman-echo.com/post";
+    private final static String request = "foo1=bar1&foo2=bar2";
+
     public static void main(String[] args) {
 
-        //Пользователь вводит дату в консоли, программа должна вывести курс USD за эту дату или сообщение об ошибке.
+        //1) Послать POST запрос на https://postman-echo.com/post где в
+        //BODY передать foo1=bar1&foo2=bar2 в формате x-www-form-urlencoded
+        //Ответ распарсить и вывести.
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Input date in format dd.mm.yyyy");
-        String input = scanner.nextLine();
-        String URL = "https://api.privatbank.ua/p24api/exchange_rates?json&date=" + input;
-
-        String json = HttpUtil.sendRequest(URL, null, null);
+        String json = HttpUtil.sendRequest(URL, null, request);
         Gson gson = new Gson();
-
         Response response = gson.fromJson(json, Response.class);
-        for (Value rate : response.getExchangeRate()) {
-            if ("USD".equals(rate.getCurrency())) {
-                System.out.println("Sale rate: " + rate.getSaleRateNB() + '\n'
-                        + "Purchase rate: " + rate.getPurchaseRateNB());
-                break;
-            }
-        }
+        System.out.println(response);
     }
 }

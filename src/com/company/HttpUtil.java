@@ -8,9 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-public class HttpUtil {
+class HttpUtil {
 
-    public static String sendRequest(String url,Map<String, String> headers, String request) {
+    static String sendRequest(String url, Map<String, String> headers, String request) {
         String result = null;
         HttpURLConnection urlConnection = null;
         try {
@@ -18,11 +18,11 @@ public class HttpUtil {
             urlConnection = (HttpURLConnection) requestUrl.openConnection();
             urlConnection.setReadTimeout(20000);
             urlConnection.setConnectTimeout(20000);
-            urlConnection.setRequestMethod("GET"); // optional, GET already by default
+            urlConnection.setRequestMethod("GET");
 
             if (request != null) {
                 urlConnection.setDoOutput(true);
-                urlConnection.setRequestMethod("POST"); // optional, setDoOutput(true) set value to POST
+                urlConnection.setRequestMethod("POST");
                 DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());
                 outputStream.writeBytes(request);
                 outputStream.flush();
@@ -51,7 +51,7 @@ public class HttpUtil {
         return result;
     }
 
-    public static String getStringFromStream(InputStream inputStream) throws IOException {
+    private static String getStringFromStream(InputStream inputStream) throws IOException {
         final int BUFFER_SIZE = 4096;
         ByteArrayOutputStream resultStream = new ByteArrayOutputStream(BUFFER_SIZE);
         byte[] buffer = new byte[BUFFER_SIZE];
